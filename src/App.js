@@ -22,6 +22,7 @@ class App extends Component {
     this.handleName = this.handleName.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handleInterests = this.handleInterests.bind(this);
+    this.handleAddress = this.handleAddress.bind(this);
   }
 
   handleCompanyName(e) {
@@ -70,6 +71,11 @@ class App extends Component {
   handleInterests(index, e) {
     let value = e.target.value;
     this.state.list[index].interests = value;
+  }
+
+  handleAddress(index, e) {
+    let value = e.target.value;
+    this.state.list[index].address = value;
   }
 
   handleSubmit(event) {
@@ -158,6 +164,7 @@ class App extends Component {
           'receiver_name': pair.givesTo.name,
           'price': this.state.company.price,
           'interests': pair.givesTo.interests,
+          'address': pair.givesTo.address,
           'giver_email': pair.santa.email
         }
       };
@@ -220,6 +227,10 @@ class App extends Component {
                          <label>Email</label>
                          <input className="half-input" type="email" ref={this.state.list[index].email} onChange={this.handleEmail.bind(this, index)}/>
                         </div>
+                      </div>
+                      <div className="full">
+                       <label>Physical Address</label>
+                       <input className="full-input" type="text" ref={this.state.list[index].address} onChange={this.handleAddress.bind(this, index)}/>
                       </div>
                       <div className="full">
                        <label>A few interests</label>
