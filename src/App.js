@@ -95,7 +95,7 @@ class App extends Component {
       needToRepick = this.checkNoMatches(newPairs);
     }
     console.log('ALL GOOD:',newPairs);
-    // this.sendEmails(newPairs);
+    this.sendEmails(newPairs);
   }
 
   checkNoMatches(pairs) {
@@ -115,7 +115,6 @@ class App extends Component {
   randomizeSantas() {
     let santaList = [];
     let hasntReceived = [].concat(this.state.list);
-    console.log('0:',hasntReceived)
 
     for (let giver of this.state.list) {
       /* Prepare the arrays and data we need */
