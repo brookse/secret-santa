@@ -23,6 +23,7 @@ class App extends Component {
     this.handleEmail = this.handleEmail.bind(this);
     this.handleInterests = this.handleInterests.bind(this);
     this.handleAddress = this.handleAddress.bind(this);
+    this.handleNomatch = this.handleNomatch.bind(this);
   }
 
   handleCompanyName(e) {
@@ -78,10 +79,34 @@ class App extends Component {
     this.state.list[index].address = value;
   }
 
+  handleNomatch(index, e) {
+    let value = e.target.value;
+    this.state.list[index].nomatch = value;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     let newPairs = this.randomizeSantas();
-    this.sendEmails(newPairs);
+    // Check to make sure no nomatches were made
+    let needToRepick = this.checkNoMatches(newPairs);
+
+    while (needToRepick) {
+      newPairs = this.randomizeSantas();
+      needToRepick = this.checkNoMatches(newPairs);
+    }
+    console.log('ALL GOOD:',newPairs);
+    // this.sendEmails(newPairs);
+  }
+
+  checkNoMatches(pairs) {
+    let needToRepick = false;
+    for (let giver of pairs) {
+      if (giver.santa.nomatch === giver.givesTo.name) {
+        console.log('NO MATCH')
+        needToRepick = true;
+      }
+    }
+    return needToRepick;
   }
 
   // Assign each member in this.state.list to another member
@@ -90,6 +115,7 @@ class App extends Component {
   randomizeSantas() {
     let santaList = [];
     let hasntReceived = [].concat(this.state.list);
+    console.log('0:',hasntReceived)
 
     for (let giver of this.state.list) {
       /* Prepare the arrays and data we need */
@@ -148,7 +174,6 @@ class App extends Component {
       // Add giver and receiver to list
       santaList.push({santa: giver, givesTo: receiver})
     }
-
     return santaList;
   }
 
@@ -228,9 +253,15 @@ class App extends Component {
                          <input className="half-input" type="email" ref={this.state.list[index].email} onChange={this.handleEmail.bind(this, index)}/>
                         </div>
                       </div>
-                      <div className="full">
-                       <label>Physical Address</label>
-                       <input className="full-input" type="text" ref={this.state.list[index].address} onChange={this.handleAddress.bind(this, index)}/>
+                      <div className="half">
+                       <div className="half-div">
+                        <label>Physical Address</label>
+                        <input className="half-input" type="text" ref={this.state.list[index].address} onChange={this.handleAddress.bind(this, index)}/>
+                       </div>
+                       <div className="half-div">
+                        <label>Don't match with</label>
+                        <input className="half-input" type="text" ref={this.state.list[index].nomatch} onChange={this.handleNomatch.bind(this, index)}/>
+                       </div>
                       </div>
                       <div className="full">
                        <label>A few interests</label>
