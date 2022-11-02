@@ -9,7 +9,7 @@
     "react": "^16.6.3",
     "react-art": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-native": "^0.41.2",
+    "react-native": "^0.70.4",
     "react-native-smtp-mailer": "https://github.com/angelos3lex/react-native-smtp-mailer.git",
     "react-native-web": "^0.9.9",
     "react-scripts": "2.1.1",
